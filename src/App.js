@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Switch, Route } from "react-router-dom";
 
+import "./App.scss";
+import Nav from "./components/nav/Nav";
+
+import Albums from "./pages/albums/Albums";
+import Artist from "./pages/artist/Artist.jsx";
+import NotFound from "./pages/notFound/NotFound.jsx";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Nav />
+      <Switch>
+        <Route exact path="/" component={Albums} />
+        <Route exact path="/artist/:id" component={Artist} />
+        <Route component={NotFound} />
+      </Switch>
     </div>
   );
 }
