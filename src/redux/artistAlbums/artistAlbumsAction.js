@@ -1,12 +1,17 @@
 import actionTypes from "../actionTypes";
 
+const setFavoriteArtist = (index) => ({
+  type: actionTypes.SET_FAVORITE_ARTIST,
+  payload: index,
+});
+
 const fetchArtistAlbumsStart = () => ({
   type: actionTypes.FETCH_ARTIST.START,
 });
 
-const fetchArtistAlbumsSuccess = (json) => ({
+const fetchArtistAlbumsSuccess = (albums) => ({
   type: actionTypes.FETCH_ARTIST.SUCCESS,
-  payload: json,
+  payload: albums,
 });
 
 const fetchArtistAlbumsFailure = (err) => ({
@@ -29,4 +34,4 @@ const fetchArtistAlbumsAsyncStart = (id) => {
   };
 };
 
-export default fetchArtistAlbumsAsyncStart;
+export { setFavoriteArtist, fetchArtistAlbumsAsyncStart };

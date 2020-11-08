@@ -1,0 +1,43 @@
+.album {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px gray;
+  width: 67.65rem;
+  height: 6.25rem;
+  padding: 1rem;
+
+  &__left {
+    display: flex;
+    flex-basis: 50%;
+    align-items: center;
+
+    &__image {
+      object-fit: contain;
+      height: 4.375rem;
+      border-radius: 5px;
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-left: 1rem;
+    }
+  }
+  &__right {
+    display: flex;
+    flex-basis: 50%;
+    align-items: center;
+    justify-content: space-between;
+
+    &__favorite-button {
+      height: 1.5rem;
+      border: none;
+      border-radius: 3px;
+      padding: 0 0.5rem 0 0.5rem;
+    }
+  }
+}

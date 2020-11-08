@@ -25,6 +25,17 @@ const albumsReducer = (state = initialState, action) => {
         errorMessage: action.payload,
         isFetching: false,
       };
+    case actionTypes.SET_FAVORITE:
+      const albums = state.albums.map((album) => {
+        if (album.id === action.payload) {
+          album.favorite = !album.favorite;
+        }
+        return album;
+      });
+      return {
+        ...state,
+        albums,
+      };
     default:
       return state;
   }

@@ -1,5 +1,10 @@
 import actionTypes from "../actionTypes";
 
+const setFavorite = (index) => ({
+  type: actionTypes.SET_FAVORITE,
+  payload: index,
+});
+
 const fetchAlbumsStart = () => ({
   type: actionTypes.FETCH_ALBUMS.START,
 });
@@ -14,12 +19,12 @@ const fetchAlbumsFailure = (err) => ({
   payload: err,
 });
 
-const fetchAlbumsAsyncStart = (limit) => {
+const fetchAlbumsAsyncStart = (limit, input) => {
   return async (dispatch) => {
     dispatch(fetchAlbumsStart());
     try {
       let response = await fetch(
-        `http://localhost:3004/albums/?_expand=artist&_limit=${limit}`
+        `http://localhost:3004/albums/?_expand=artist&_limit=${limit}&q=${input}`
       );
       let json = await response.json();
       dispatch(fetchAlbumsSuccess(json));
@@ -29,4 +34,4 @@ const fetchAlbumsAsyncStart = (limit) => {
   };
 };
 
-export default fetchAlbumsAsyncStart;
+export { fetchAlbumsAsyncStart, setFavorite };

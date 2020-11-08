@@ -3,28 +3,37 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import Album from "../../components/album/Album.jsx";
-import fetchArtistAlbumsAsyncStart from "../../redux/artistAlbums/artistAlbumsAction.js";
+import Spinner from "../../components/spinner/Spinner.jsx";
 
-const Artist = ({ artistAlbums, fetchArtistAlbumsAsyncStart, match }) => {
-  const { albums } = artistAlbums;
+import { fetchArtistAlbumsAsyncStart } from "../../redux/artistAlbums/artistAlbumsAction";
+
+const Artist = ({ artistState, fetchArtistAlbumsAsyncStart, match }) => {
+  const {
+    artistAlbums: { albums, title },
+    isFetching,
+  } = artistState;
   const id = match.params.id;
-  console.log(id);
   useEffect(() => {
     fetchArtistAlbumsAsyncStart(id);
   }, []);
   return (
-    <div>
-      <div className="albums">
-        {albums
-          ? albums.map((album) => <Album key={album.id} album={album} />)
-          : ""}
+    <div className="albums">
+      <div className="albums__container">
+        {!isFetching ? (
+          albums &&
+          albums.map((album) => (
+            <Album key={album.id} album={album} artist={title} inArtist />
+          ))
+        ) : (
+          <Spinner />
+        )}
       </div>
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  artistAlbums: state.artist.artistAlbums,
+  artistState: state.artist,
 });
 
 const mapDispatchToProps = (dispatch) => ({

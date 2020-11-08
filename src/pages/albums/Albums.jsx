@@ -3,29 +3,43 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import queryString from "query-string";
 
-import Album from "../../components/album/Album";
-import fetchAlbumsAsyncStart from "../../redux/albums/albumsActions";
+import "./albums.scss";
 
-const Albums = ({ albums, fetchAlbumsAsyncStart, location }) => {
+import Album from "../../components/album/Album";
+import { fetchAlbumsAsyncStart } from "../../redux/albums/albumsActions";
+import Spinner from "../../components/spinner/Spinner";
+
+const Albums = ({ albumsStore, fetchAlbumsAsyncStart, location, search }) => {
+  const { albums, isFetching } = albumsStore;
   useEffect(() => {
     const limit = queryString.parse(location.search).limit || 10;
-    fetchAlbumsAsyncStart(limit);
-  }, []);
+    const input = search || "";
+    fetchAlbumsAsyncStart(limit, input);
+  }, [search]);
   return (
     <div className="albums">
-      {albums
-        ? albums.map((album) => <Album key={album.id} album={album.artist} />)
-        : ""}
+      <div className="albums__container">
+        {!isFetching ? (
+          albums &&
+          albums.map((album) => (
+            <Album key={album.id} album={album} artist={album.artist.title} />
+          ))
+        ) : (
+          <Spinner />
+        )}
+      </div>
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  albums: state.albums.albums,
+  albumsStore: state.albums,
+  search: state.searchText.input,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchAlbumsAsyncStart: (limit) => dispatch(fetchAlbumsAsyncStart(limit)),
+  fetchAlbumsAsyncStart: (limit, input) =>
+    dispatch(fetchAlbumsAsyncStart(limit, input)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Albums));
