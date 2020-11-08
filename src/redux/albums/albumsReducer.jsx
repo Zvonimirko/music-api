@@ -4,6 +4,7 @@ const initialState = {
   albums: [],
   errorMessage: "",
   isFetching: false,
+  nextUrl: "http://localhost:3004/albums/?_expand=artist&_page=1",
 };
 
 const albumsReducer = (state = initialState, action) => {
@@ -14,10 +15,13 @@ const albumsReducer = (state = initialState, action) => {
         isFetching: true,
       };
     case actionTypes.FETCH_ALBUMS.SUCCESS:
+      const nextUrl =
+        action.headers && action.headers.next && action.headers.next.url;
       return {
         ...state,
-        albums: action.payload,
+        albums: [...state.albums, ...action.payload],
         isFetching: false,
+        nextUrl,
       };
     case actionTypes.FETCH_ALBUMS.FAILURE:
       return {
@@ -28,7 +32,10 @@ const albumsReducer = (state = initialState, action) => {
     case actionTypes.SET_FAVORITE:
       const albums = state.albums.map((album) => {
         if (album.id === action.payload) {
-          album.favorite = !album.favorite;
+          return {
+            ...album,
+            favorite: !album.favorite,
+          };
         }
         return album;
       });

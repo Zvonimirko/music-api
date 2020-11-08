@@ -33,11 +33,20 @@
     align-items: center;
     justify-content: space-between;
 
+    span {
+      color: #a0a0a0;
+    }
+
     &__favorite-button {
-      height: 1.5rem;
+      background-color: aqua;
+      color: white;
+      height: 1.7rem;
       border: none;
       border-radius: 3px;
       padding: 0 0.5rem 0 0.5rem;
+      width: 10rem;
+      outline: none;
+      font-weight: bold;
     }
   }
 }

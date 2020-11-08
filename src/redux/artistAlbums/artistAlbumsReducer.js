@@ -28,11 +28,13 @@ const artistAlbumsReducer = (state = initialState, action) => {
     case actionTypes.SET_FAVORITE_ARTIST:
       const albums = state.artistAlbums.albums.map((album) => {
         if (album.id === action.payload) {
-          album.favorite = !album.favorite;
+          return {
+            ...album,
+            favorite: !album.favorite,
+          };
         }
         return album;
       });
-      debugger;
       return {
         ...state,
         artistAlbums: {
