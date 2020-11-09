@@ -1,4 +1,5 @@
 import actionTypes from "../actionTypes";
+import fetchUrls from "../../assets/urls";
 
 const setFavoriteArtist = (index) => ({
   type: actionTypes.SET_FAVORITE_ARTIST,
@@ -23,9 +24,7 @@ const fetchArtistAlbumsAsyncStart = (id) => {
   return async (dispatch) => {
     dispatch(fetchArtistAlbumsStart());
     try {
-      let response = await fetch(
-        `http://localhost:3004/artists/${id}?_embed=albums`
-      );
+      let response = await fetch(`${fetchUrls.artistUrl}${id}?_embed=albums`);
       let json = await response.json();
       dispatch(fetchArtistAlbumsSuccess(json));
     } catch (err) {

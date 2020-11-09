@@ -7,12 +7,18 @@ import Spinner from "../../components/spinner/Spinner.jsx";
 
 import { fetchArtistAlbumsAsyncStart } from "../../redux/artistAlbums/artistAlbumsAction";
 
-const Artist = ({ artistState, fetchArtistAlbumsAsyncStart, match }) => {
+const Artist = ({
+  artistState,
+  fetchArtistAlbumsAsyncStart,
+  match,
+  history,
+}) => {
   const {
     artistAlbums: { albums, title },
     isFetching,
   } = artistState;
   const id = match.params.id;
+
   useEffect(() => {
     fetchArtistAlbumsAsyncStart(id);
   }, []);
